@@ -28,6 +28,7 @@ async def on_message(message):
   async def addPlayers():
     msg = await client.wait_for('message')
 
+    ###### NEED TO GET JUST THE NUMBERS IN PLAYER ID WHEN MENTIONED, SO THAT IF STATMENTS CAN WORK############
     for player in msg.content.split(" "):
       playerList.append(player)
 
@@ -92,6 +93,9 @@ async def on_message(message):
 ####### Run Game Loop Start ##############################
   while runGame:
     msg = await client.wait_for('message')
+
+    print(msg.author.id)
+    print(playerList)
 
     ########## If Statements for Dungeon Master ############################
     if msg.author.name == dungeonMaster and msg.content.startswith("$help"):
