@@ -5,7 +5,7 @@ class CharacterSheet:
     self.luck = luck
     self.items = items
   
-  def sheet(self, givenRace, givenClass):
+  def sheet(givenRace, givenClass):
     if givenRace == "human":
       attack = 5
       defense = 5

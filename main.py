@@ -7,6 +7,7 @@ from CharacterSheet import CharacterSheet
 client = discord.Client()
 
 playerList = []
+refrenceList = []
 runGame = True
 dungeonMaster = ""
 
@@ -60,9 +61,20 @@ async def on_message(message):
   async def run():
     return #TODO
 
-  async def characterSheet(givenRace, givenClass):
+  async def characterSheet(player, givenRace, givenClass):
     sheet = CharacterSheet.sheet(givenRace, givenClass)
-    print(sheet)
+
+    refrence = str(player) + "'s Character Sheet\n" + str(givenRace) + " " + str(givenClass) + "\n" + str(sheet)
+    
+    refrenceList.append(player)
+    refrenceList.append(refrence)
+    await message.channel.send(refrence)
+  
+  async def initializePlayer(player):
+    await message.channel.send(str(player) + " choose your Race and Class:\nRaces:Human, Orc, Elf, Goblin, Demon\nClasses: Knight, Archer, Mage, Theif, Cook, Doctor")
+    msg = await client.wait_for('message')
+    stringSplit = msg.content.split(" ")
+    await characterSheet(player, stringSplit[0], stringSplit[1])
   
 
 ####### Start Of The Game ##############################
@@ -73,6 +85,9 @@ async def on_message(message):
     time.sleep(1)
     await addPlayers()
     await message.channel.send("Players: " + str(playerList))
+
+    for player in playerList:
+      await initializePlayer(player)
 
 ####### Run Game Loop Start ##############################
   while runGame:
