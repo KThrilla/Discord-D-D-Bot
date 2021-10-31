@@ -29,6 +29,7 @@ async def on_message(message):
     msg = await client.wait_for('message')
 
     ###### NEED TO GET JUST THE NUMBERS IN PLAYER ID WHEN MENTIONED, SO THAT IF STATMENTS CAN WORK############
+
     for player in msg.content.split(" "):
       playerList.append(player)
 
@@ -51,7 +52,7 @@ async def on_message(message):
 
   ####### Player Methods ####################################
   async def helpPlayer():
-    await message.channel.send("Dungeon Master Commands:\n$help - look up commands\n$attack - attacks enemy\n$defend - Reduces incoming damage\n$run - run away from a fight\n$sheet - look at your character sheet")
+    await message.channel.send("Player Commands:\n$help - look up commands\n$attack - attacks enemy\n$defend - Reduces incoming damage\n$run - run away from a fight\n$sheet - look at your character sheet")
 
   async def attack():
     return #TODO
@@ -93,6 +94,7 @@ async def on_message(message):
 ####### Run Game Loop Start ##############################
   while runGame:
     msg = await client.wait_for('message')
+    playerID = "<@!" + str(msg.author.id) + ">"
 
     print(msg.author.id)
     print(playerList)
@@ -100,30 +102,28 @@ async def on_message(message):
     ########## If Statements for Dungeon Master ############################
     if msg.author.name == dungeonMaster and msg.content.startswith("$help"):
       await helpDungeonMaster()
-      
-    if msg.author.name == dungeonMaster and msg.content.startswith("$add player"):
+    
+    elif msg.author.name == dungeonMaster and msg.content.startswith("$add player"):
       await addPlayers()
       await message.channel.send("Players: " + str(playerList))
-    
-    if msg.author.name == dungeonMaster and msg.content.startswith("$delete player"):
+
+    elif msg.author.name == dungeonMaster and msg.content.startswith("$delete player"):
       await deletePlayers()
       await message.channel.send("Players: " + str(playerList))
     
-    if msg.author.name == dungeonMaster and msg.content.startswith("$skip"):
+    elif msg.author.name == dungeonMaster and msg.content.startswith("$skip"):
       await skipPlayer()
     
-    if msg.author.name == dungeonMaster and msg.content.startswith("$event"):
+    elif msg.author.name == dungeonMaster and msg.content.startswith("$event"):
       await eventTurn()
 
-    if msg.author.name == dungeonMaster and msg.content.startswith("$end"):
+    elif msg.author.name == dungeonMaster and msg.content.startswith("$end"):
       await endGame()
     
     ########## If Statements for Players ############################
-    if msg.author.name in playerList and msg.content.startswith("$help"):
+    elif playerID in playerList and msg.content.startswith("$2help"):
       await helpPlayer()
     
-
-    #while(runGame):
       
 
 
