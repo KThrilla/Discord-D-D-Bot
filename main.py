@@ -80,7 +80,7 @@ async def on_message(message):
 ####### Start Of The Game ##############################
   if ('<@!904149165318238261>' in message.content or '<@904149165318238261>' in message.content) and message.channel.name == 'bot-stuff' and len(playerList) == 0:
     dungeonMaster = message.author.name
-    await message.channel.send(str(dungeonMaster) + "is Dungeon Master \nMention the Players")
+    await message.channel.send(str(dungeonMaster) + " is Dungeon Master \nMention the Players")
 
     time.sleep(1)
     await addPlayers()
@@ -114,9 +114,9 @@ async def on_message(message):
     if msg.author.name == dungeonMaster and msg.content.startswith("$end"):
       await endGame()
     
-    ########## If Statements for Dungeon Master ############################
-    if msg.author.name == dungeonMaster and msg.content.startswith("$end"):
-      await endGame()
+    ########## If Statements for Players ############################
+    if msg.author.name in playerList and msg.content.startswith("$help"):
+      await helpPlayer()
     
 
     #while(runGame):
